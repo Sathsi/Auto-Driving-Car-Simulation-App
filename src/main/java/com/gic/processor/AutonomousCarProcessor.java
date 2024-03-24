@@ -4,7 +4,7 @@ import com.gic.model.CarCollisionResponse;
 import com.gic.model.CarInputDetails;
 import com.gic.model.Position;
 import com.gic.model.Direction;
-import com.gic.utils.validation.RequestValidator;
+import com.gic.utils.RequestValidator;
 
 import java.util.List;
 

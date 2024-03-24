@@ -3,7 +3,7 @@ package com.gic.util;
 import com.gic.exception.CarInputDetailValidationException;
 import com.gic.model.Position;
 import com.gic.model.ValidationConst;
-import com.gic.utils.validation.RequestValidator;
+import com.gic.utils.RequestValidator;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
