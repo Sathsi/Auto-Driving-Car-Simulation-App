@@ -1,9 +1,10 @@
-package com.gic.service;
+package com.gic.processor;
 
 import com.gic.model.CarInputDetails;
 import com.gic.model.Position;
-import com.gic.processor.AutonomousCarProcessor;
 
+import com.gic.processor.impl.AutonomousCarProcessorImpl;
+import com.gic.utils.RequestValidator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -13,20 +14,23 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class AutoDriveCarServiceTest {
+public class AutonomousCarProcessorTest {
 
-    private AutonomousCarProcessor autonomousCarProcessor = new AutonomousCarProcessor();
+    private static AutonomousCarProcessor autonomousCarProcessor;
 
+    private static final RequestValidator requestValidator = mock(RequestValidator.class);
     private static final CarInputDetails car1 = mock(CarInputDetails.class);
     private static final CarInputDetails car2 = mock(CarInputDetails.class);
     private static final CarInputDetails car3 = mock(CarInputDetails.class);
 
-    private static final Position position1  = mock(Position.class);
-    private static final Position position2  = mock(Position.class);
-    private static final Position position3  = mock(Position.class);
+    private static final Position position1 = mock(Position.class);
+    private static final Position position2 = mock(Position.class);
+    private static final Position position3 = mock(Position.class);
 
     @BeforeAll
     static void beforeSetup(){
+
+        autonomousCarProcessor = new AutonomousCarProcessorImpl(requestValidator);
 
         when(position1.getDirection()).thenReturn("N");
         when(position1.getX()).thenReturn(1);

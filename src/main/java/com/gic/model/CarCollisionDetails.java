@@ -1,11 +1,11 @@
 package com.gic.model;
 
-public class CarCollisionResponse {
+public class CarCollisionDetails {
     private String carNames;
     private String collisionPosition;
     private int step;
 
-    public CarCollisionResponse(String carNames, String collisionPosition, int step) {
+    public CarCollisionDetails(String carNames, String collisionPosition, int step) {
         this.carNames = carNames;
         this.collisionPosition = collisionPosition;
         this.step = step;

@@ -3,6 +3,8 @@ package com.gic;
 import com.gic.model.CarInputDetails;
 import com.gic.model.Position;
 import com.gic.processor.AutonomousCarProcessor;
+import com.gic.processor.impl.AutonomousCarProcessorImpl;
+import com.gic.utils.RequestValidator;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -12,7 +14,6 @@ import java.util.Scanner;
 public class AutoDrivingCarApplication {
 
     private static final Logger LOGGER = Logger.getLogger(AutoDrivingCarApplication.class);
-    private static AutonomousCarProcessor autonomousCarProcessor = new AutonomousCarProcessor();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -45,25 +46,14 @@ public class AutoDrivingCarApplication {
         }
 
         try {
-            String finalResult = new AutoDrivingCarApplication().carMove(method, width, height, carInputDetailsList);
-            System.out.println(finalResult);
+            RequestValidator requestValidator = new RequestValidator();
+            AutonomousCarProcessor autonomousCarProcessor = new AutonomousCarProcessorImpl(requestValidator);
+            MoveCar moveCar = new MoveCar(autonomousCarProcessor);
+            moveCar.carMove(method, width, height, carInputDetailsList);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
         }
 
     }
 
-    //Start the car movements
-    public String carMove(String method, int width, int height, List<CarInputDetails> carInputDetailsList) throws Exception {
-        String finalResult = "";
-        if("1".equals(method.trim())){
-            finalResult = autonomousCarProcessor.getCarEndingPositionAndDirection(width, height, carInputDetailsList.get(0));
-            
-        } else if("2".equals(method.trim())){
-            finalResult = autonomousCarProcessor.checkCarCollisionHappen(width, height, carInputDetailsList);
-        } else
-            System.out.println("Invalid method invoke. Please send correct method");
-        
-        return finalResult;
-    }
 }
