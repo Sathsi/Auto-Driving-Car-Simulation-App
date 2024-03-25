@@ -97,7 +97,7 @@ public class AutonomousCarProcessorImpl implements AutonomousCarProcessor {
                 int dy = movements[index][1];
                 int newX = x + dx;
                 int newY = y + dy;
-                if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
+                if (newX >= 0 && newX <= width && newY >= 0 && newY <= height) {
                     x = newX;
                     y = newY;
                 }

@@ -29,20 +29,33 @@ public class AutoDrivingCarApplication {
         int height = Integer.parseInt(fieldDimensions[1]);
 
         List<CarInputDetails> carInputDetailsList = new ArrayList<>();
-        System.out.println("Enter details for each car as below (name x y direction commands):");
-        System.out.println("----- \nname \nx y direction \ncommands\n-----");
-        while (scanner.hasNextLine()) {
-            String name = scanner.nextLine().trim();
-            if (name.isEmpty()) { // Exit loop if input is empty
-                break;
-            }
+        if ("1".equals(method.trim())) {
+            System.out.println("Enter initial position (x y direction):");
             String[] initialPosition = scanner.nextLine().split(" ");
             int x = Integer.parseInt(initialPosition[0]);
             int y = Integer.parseInt(initialPosition[1]);
             String startDirection = initialPosition[2];
-
+            System.out.println("Enter the commands (FFRL):");
             String commands = scanner.nextLine();
-            carInputDetailsList.add(new CarInputDetails(name, new Position(x, y, startDirection), commands));
+            carInputDetailsList.add(new CarInputDetails("", new Position(x, y, startDirection), commands));
+
+        } else if ("2".equals(method.trim())) {
+            System.out.println("enter the details for each car in the following format. Press enter again once finish entering details");
+            System.out.println("----- \nname \nx y direction \ncommands\n-----");
+            while (scanner.hasNextLine()) {
+                String name = scanner.nextLine().trim();
+                if (name.isEmpty()) { // Exit loop if input is empty
+                    break;
+                }
+                String[] initialPosition = scanner.nextLine().split(" ");
+                int x = Integer.parseInt(initialPosition[0]);
+                int y = Integer.parseInt(initialPosition[1]);
+                String startDirection = initialPosition[2];
+
+                String commands = scanner.nextLine();
+                carInputDetailsList.add(new CarInputDetails(name, new Position(x, y, startDirection), commands));
+            }
+
         }
 
         try {

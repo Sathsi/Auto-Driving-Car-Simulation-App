@@ -23,7 +23,7 @@ public class MoveCar {
         } else
             System.out.println("Invalid method invoke. Please send correct method");
 
-        System.out.println(finalResult);
+        System.out.println("\nResult : " + finalResult);
 
         return finalResult;
     }
