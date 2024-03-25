@@ -4,7 +4,7 @@ import com.gic.model.CarInputDetails;
 import com.gic.model.Position;
 import com.gic.processor.AutonomousCarProcessor;
 import com.gic.processor.impl.AutonomousCarProcessorImpl;
-import com.gic.utils.RequestValidator;
+import com.gic.utils.InputValidator;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class AutoDrivingCarApplication {
             carInputDetailsList.add(new CarInputDetails("", new Position(x, y, startDirection), commands));
 
         } else if ("2".equals(method.trim())) {
-            System.out.println("enter the details for each car in the following format. Press enter again once finish entering details");
+            System.out.println("enter the details for each car in the following format. Press enter key twice once finish entering details");
             System.out.println("----- \nname \nx y direction \ncommands\n-----");
             while (scanner.hasNextLine()) {
                 String name = scanner.nextLine().trim();
@@ -59,8 +59,8 @@ public class AutoDrivingCarApplication {
         }
 
         try {
-            RequestValidator requestValidator = new RequestValidator();
-            AutonomousCarProcessor autonomousCarProcessor = new AutonomousCarProcessorImpl(requestValidator);
+            InputValidator inputValidator = new InputValidator();
+            AutonomousCarProcessor autonomousCarProcessor = new AutonomousCarProcessorImpl(inputValidator);
             MoveCar moveCar = new MoveCar(autonomousCarProcessor);
             moveCar.carMove(method, width, height, carInputDetailsList);
         } catch (Exception e) {

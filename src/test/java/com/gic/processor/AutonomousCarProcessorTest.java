@@ -4,7 +4,7 @@ import com.gic.model.CarInputDetails;
 import com.gic.model.Position;
 
 import com.gic.processor.impl.AutonomousCarProcessorImpl;
-import com.gic.utils.RequestValidator;
+import com.gic.utils.InputValidator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +18,7 @@ public class AutonomousCarProcessorTest {
 
     private static AutonomousCarProcessor autonomousCarProcessor;
 
-    private static final RequestValidator requestValidator = mock(RequestValidator.class);
+    private static final InputValidator requestValidator = mock(InputValidator.class);
     private static final CarInputDetails car1 = mock(CarInputDetails.class);
     private static final CarInputDetails car2 = mock(CarInputDetails.class);
     private static final CarInputDetails car3 = mock(CarInputDetails.class);
@@ -28,7 +28,7 @@ public class AutonomousCarProcessorTest {
     private static final Position position3 = mock(Position.class);
 
     @BeforeAll
-    static void beforeSetup(){
+    public static void beforeSetup(){
 
         autonomousCarProcessor = new AutonomousCarProcessorImpl(requestValidator);
 

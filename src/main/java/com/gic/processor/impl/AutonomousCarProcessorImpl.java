@@ -5,23 +5,23 @@ import com.gic.model.CarInputDetails;
 import com.gic.model.Position;
 import com.gic.model.Direction;
 import com.gic.processor.AutonomousCarProcessor;
-import com.gic.utils.RequestValidator;
+import com.gic.utils.InputValidator;
 
 import java.util.List;
 
 public class AutonomousCarProcessorImpl implements AutonomousCarProcessor {
 
-    private final RequestValidator requestValidator;
+    private final InputValidator inputValidator;
 
-    public AutonomousCarProcessorImpl(RequestValidator requestValidator) {
-        this.requestValidator = requestValidator;
+    public AutonomousCarProcessorImpl(InputValidator inputValidator) {
+        this.inputValidator = inputValidator;
     }
 
     //Get car ending position with given input details
     @Override
     public String getCarEndingPositionAndDirection(int width, int height, CarInputDetails carInputDetails) throws Exception {
 
-        requestValidator.validateCarAutoDriveInputDetails(width, height,carInputDetails.getInitialPosition()
+        inputValidator.validateCarAutoDriveInputDetails(width, height,carInputDetails.getInitialPosition()
                 ,carInputDetails.getCommands());
 
         Position finalCarPosition = calculateCarEndingPosition(width, height, carInputDetails.getInitialPosition().getX()
@@ -35,7 +35,7 @@ public class AutonomousCarProcessorImpl implements AutonomousCarProcessor {
     @Override
     public String checkCarCollisionHappen(int width, int height, List<CarInputDetails> carInputDetailsList) throws Exception {
 
-        requestValidator.validateCarAutoDriveInputDetails(width, height, carInputDetailsList);
+        inputValidator.validateCarAutoDriveInputDetails(width, height, carInputDetailsList);
 
         CarCollisionDetails carCollisionDetails = null;
 

@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Arrays;
 import java.util.List;
 
-public class RequestValidator {
+public class InputValidator {
 
     //Validate all input values
     public void validateCarAutoDriveInputDetails(int width, int height, Position position, String commands) throws Exception{
@@ -29,18 +29,19 @@ public class RequestValidator {
     }
 
     private void validateCoordinate (int x, int y, int width, int height) throws Exception {
-        boolean isValid = true;
         if(width < 0 || height < 0){
-            isValid = false;
+            throw new CarInputDetailValidationException(ValidationConst.INVALID_FIELD_SIZE,
+                    ValidationConst.INVALID_FIELD_SIZE.message());
         }
+        boolean isValidCoordinates = true;
         if(x < 0 || y < 0){
-            isValid = false;
+            isValidCoordinates = false;
         }
         if (x > width || y > height) {
-            isValid = false;
+            isValidCoordinates = false;
         }
 
-        if(!isValid){
+        if(!isValidCoordinates){
             throw new CarInputDetailValidationException(ValidationConst.INVALID_COORDINATES,
                     ValidationConst.INVALID_COORDINATES.message());
         }
