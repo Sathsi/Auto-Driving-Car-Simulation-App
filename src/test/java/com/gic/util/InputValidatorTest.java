@@ -28,7 +28,7 @@ public class InputValidatorTest {
     @Test
     public void whenInvalidStartDirectionThenThrowException() throws Exception {
         try {
-            Position position = new Position(1,2,"N");
+            Position position = new Position(1,2,"A");
             inputValidator.validateCarAutoDriveInputDetails(10,10,position, "FRFF");
         } catch (CarInputDetailValidationException e) {
             // Assert that the exception message is correct
