@@ -2,10 +2,16 @@
 Auto Driving Car Simulation
 
 ## Content
+- Environment required
 - Assumptions
 - Build the project
 - Running the app
 - End Points
+
+## Environment required
+- JDK 1.8
+- Maven 3.8.4 or compatible version with java 1.8
+- external libraries used: log4j, Apache commons
 
 ## Assumptions
 - To check collision, it only tests with 2 cars
