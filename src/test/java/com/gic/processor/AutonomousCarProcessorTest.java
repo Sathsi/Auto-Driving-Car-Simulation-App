@@ -58,19 +58,21 @@ public class AutonomousCarProcessorTest {
 
     }
 
+    // All test cases use valid inputs
+
     @Test
-    public void whenValidCarInputDetailsThenReturnCorrectEndingPosition() throws Exception {
+    public void whenDeployOneCar_ThenReturnEndPosition() throws Exception {
         String carEndingPosition = autonomousCarProcessor.getCarEndingPositionAndDirection(10,10, car1);
         String[] finalResult = carEndingPosition.split(" ");
         assertNotNull(carEndingPosition);
-        assertEquals("S",finalResult[2]);
         assertEquals("5",finalResult[0]);
         assertEquals("4",finalResult[1]);
+        assertEquals("S",finalResult[2]);
 
     }
 
     @Test
-    public void whenMultipleCarsDeployOnSameFieldThenCheckCollision_Collision() throws Exception {
+    public void whenDeployMultipleCar_ThenCheckCollision_Collide() throws Exception {
         List<CarInputDetails> collisionCarList = new ArrayList<>();
         collisionCarList.add(car1);
         collisionCarList.add(car2);
@@ -82,13 +84,78 @@ public class AutonomousCarProcessorTest {
     }
 
     @Test
-    public void whenMultipleCarsDeployOnSameFieldThenCheckCollision_NoCollision() throws Exception {
+    public void whenDeployMultipleCar_ThenCheckCollision_NoCollision() throws Exception {
         List<CarInputDetails> noCollisionCarList = new ArrayList<>();
         noCollisionCarList.add(car1);
         noCollisionCarList.add(car3);
         String expectedResult = "No Collision";
 
         String collisionResult  = autonomousCarProcessor.checkCarCollisionHappen(10,10,noCollisionCarList);
+        assertNotNull(collisionResult);
+        assertEquals(expectedResult,collisionResult);
+    }
+
+    @Test
+    public void whenDeployOneCar_OutBoundaryCommand_ThenReturnEndPosition() throws Exception {
+        CarInputDetails car = mock(CarInputDetails.class);
+        when(car.getCommands()).thenReturn("FFRFFFFFRL");
+        when(car.getInitialPosition()).thenReturn(position1);
+        when(car.getName()).thenReturn("A");
+
+        //Here 8th command F is ignored since it move car outside of the boundary
+        String carEndingPosition = autonomousCarProcessor.getCarEndingPositionAndDirection(5,5, car);
+        String[] finalResult = carEndingPosition.split(" ");
+        assertNotNull(carEndingPosition);
+        assertEquals("5",finalResult[0]);
+        assertEquals("4",finalResult[1]);
+        assertEquals("E",finalResult[2]);
+
+    }
+
+    @Test
+    public void whenDeployMultipleCar_OutBoundaryCommand_ThenCheckCollision_Collide() throws Exception {
+        CarInputDetails car = mock(CarInputDetails.class);
+        Position position = mock(Position.class);
+
+        when(position.getDirection()).thenReturn("E");
+        when(position.getX()).thenReturn(3);
+        when(position.getY()).thenReturn(1);
+
+        when(car.getCommands()).thenReturn("FFFFLFFFLF");
+        when(car.getInitialPosition()).thenReturn(position);
+        when(car.getName()).thenReturn("B");
+
+        //Here car 2 3rd F and 4th F commands are ignored since it move car outside of the boundary
+        List<CarInputDetails> collisionCarList = new ArrayList<>();
+        collisionCarList.add(car1);
+        collisionCarList.add(car);
+        String expectedResult = "A B\n5 4\n8";
+
+        String collisionResult  = autonomousCarProcessor.checkCarCollisionHappen(5,5,collisionCarList);
+        assertNotNull(collisionResult);
+        assertEquals(expectedResult,collisionResult);
+    }
+
+    @Test
+    public void whenDeployMultipleCar_OutBoundaryCommand_ThenCheckCollision_NoCollision() throws Exception {
+        CarInputDetails car = mock(CarInputDetails.class);
+        Position position = mock(Position.class);
+
+        when(position.getDirection()).thenReturn("E");
+        when(position.getX()).thenReturn(3);
+        when(position.getY()).thenReturn(1);
+
+        when(car.getCommands()).thenReturn("FFFFLFFLFR");
+        when(car.getInitialPosition()).thenReturn(position2);
+        when(car.getName()).thenReturn("B");
+
+        //Here car 2 3rd F and 4th F commands are ignored since it move car outside of the boundary
+        List<CarInputDetails> collisionCarList = new ArrayList<>();
+        collisionCarList.add(car1);
+        collisionCarList.add(car);
+        String expectedResult = "No Collision";
+
+        String collisionResult  = autonomousCarProcessor.checkCarCollisionHappen(5,5,collisionCarList);
         assertNotNull(collisionResult);
         assertEquals(expectedResult,collisionResult);
     }
