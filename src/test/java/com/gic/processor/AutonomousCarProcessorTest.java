@@ -125,7 +125,7 @@ public class AutonomousCarProcessorTest {
         when(car.getInitialPosition()).thenReturn(position);
         when(car.getName()).thenReturn("B");
 
-        //Here car 2 3rd F and 4th F commands are ignored since it move car outside of the boundary
+        //Here car B ignored 3rd F and 4th F commands since it move car out of the boundary
         List<CarInputDetails> collisionCarList = new ArrayList<>();
         collisionCarList.add(car1);
         collisionCarList.add(car);
@@ -149,7 +149,7 @@ public class AutonomousCarProcessorTest {
         when(car.getInitialPosition()).thenReturn(position2);
         when(car.getName()).thenReturn("B");
 
-        //Here car 2 3rd F and 4th F commands are ignored since it move car outside of the boundary
+        //Here second car (B) ignored 3rd F and 4th F commands since it move car out of the boundary
         List<CarInputDetails> collisionCarList = new ArrayList<>();
         collisionCarList.add(car1);
         collisionCarList.add(car);

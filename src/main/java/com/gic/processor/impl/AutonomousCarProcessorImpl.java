@@ -39,13 +39,12 @@ public class AutonomousCarProcessorImpl implements AutonomousCarProcessor {
 
         CarCollisionDetails carCollisionDetails = null;
 
-        //Find the maximum command length among all cars. Max length is consider as max driving time
-        int drivingTime = carInputDetailsList.stream()
+        //Find the maximum command length among all cars. Max length is consider as max driving steps
+        int maxDrivingSteps = carInputDetailsList.stream()
                 .mapToInt(car -> car.getCommands().length())
                 .max()
                 .orElse(0);
 
-        //As a improvement this can be generated using factory design pattern
         CarInputDetails carOne = carInputDetailsList.get(0);
         CarInputDetails carTwo = carInputDetailsList.get(1);
 
@@ -53,7 +52,7 @@ public class AutonomousCarProcessorImpl implements AutonomousCarProcessor {
         Position carTwoPosition = carTwo.getInitialPosition();
 
         // Check for collision with other cars
-        for(int i=0; i < drivingTime; i++){
+        for(int i=0; i < maxDrivingSteps; i++){
             carOnePosition = calculateCarEndingPosition(width, height
                     ,carOnePosition.getX()
                     ,carOnePosition.getY()
@@ -66,6 +65,7 @@ public class AutonomousCarProcessorImpl implements AutonomousCarProcessor {
                     ,carTwoPosition.getDirection()
                     , String.valueOf(carTwo.getCommands().toCharArray()[i]));
 
+            //check the two position is equal to check the cars collide each other
             if(carOnePosition.getX() == carTwoPosition.getX() &&
                     carOnePosition.getY() == carTwoPosition.getY()){
                 carCollisionDetails = new CarCollisionDetails(carOne.getName() + " " + carTwo.getName()
@@ -92,15 +92,19 @@ public class AutonomousCarProcessorImpl implements AutonomousCarProcessor {
 
         for (String command : commandArray) {
             if (command.equals("F")) {
-                int index = indexOf(Direction.toStringArray(), direction);
-                int dx = movements[index][0];
-                int dy = movements[index][1];
+                int index = indexOf(Direction.toStringArray(), direction); // Read the index of current position based on the direction
+                int dx = movements[index][0]; // Based on the current index, get the dx value
+                int dy = movements[index][1]; // Based on the current index, get the dy value
                 int newX = x + dx;
                 int newY = y + dy;
+
+                //Check the boundary conditions
                 if (newX >= 0 && newX <= width && newY >= 0 && newY <= height) {
                     x = newX;
                     y = newY;
                 }
+                /* Check the new direction of the car if command is L
+                eg: current direction is N, then with L new direction is W */
             } else if (command.equals("L")) {
                 direction = rotateLeft(direction);
             } else if (command.equals("R")) {
